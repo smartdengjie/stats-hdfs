@@ -1,0 +1,7 @@
+/target/
+/logs/
+*.settings/
+*.classpath
+.classpath
+*.jupiter
+*.project
