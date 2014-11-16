@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /target/
 /logs/
 *.settings/
@@ -6,11 +5,3 @@
 .classpath
 *.jupiter
 *.project
-=======
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
->>>>>>> ba60a30a5006b8aba3ad78ad9cedf355965e955a
