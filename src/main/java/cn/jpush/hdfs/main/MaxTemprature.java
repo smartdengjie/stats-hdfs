@@ -25,13 +25,14 @@ public class MaxTemprature {
 			long start = System.currentTimeMillis();
 			Configuration conf = new Configuration();
 			conf.set("io.serializations","org.apache.hadoop.io.serializer.JavaSerialization," + "org.apache.hadoop.io.serializer.WritableSerialization");
-			conf.set("io.sort.mb", "1024");
+//			conf.set("io.sort.mb", "512");
 //			conf.setBoolean("mapreduce.map.output.compress", true);
 //			conf.setClass("mapreduce.map.output.compress.codec", GzipCodec.class,CompressionCodec.class);
 			long rondom = new Random().nextLong();
 			Job job = new Job(conf, "Max temperature");
 			job.setJarByClass(MaxTemprature.class);
 			job.setMapperClass(MaxTemperatureMapper.class);
+			job.setCombinerClass(MaxTemperatureReducer.class);
 			job.setReducerClass(MaxTemperatureReducer.class);
 			job.setOutputKeyClass(Text.class);
 			job.setOutputValueClass(IntWritable.class);

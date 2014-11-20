@@ -1,4 +1,4 @@
-package cn.jpush.push.couchbase.util;
+package cn.jpush.hdfs;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
