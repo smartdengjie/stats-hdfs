@@ -5,13 +5,13 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class SystemConfig {
 	private static Properties mConfig;
 
-	private static Logger log = LoggerFactory.getLogger(SystemConfig.class);
+	private static Log log = LogFactory.getLog(SystemConfig.class);
 	static {
 		mConfig = new Properties();
 
