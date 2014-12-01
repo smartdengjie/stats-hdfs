@@ -22,7 +22,9 @@ import cn.jpush.hdfs.utils.ConfigUtils;
  * 
  * @author dengjie
  * @date 2014年11月29日
- * @description TODO
+ * @description Wordcount的例子是一个比较经典的mapreduce例子，可以叫做Hadoop版的hello world。
+ *              它将文件中的单词分割取出，然后shuffle，sort（map过程），接着进入到汇总统计
+ *              （reduce过程），最后写道hdfs中。基本流程就是这样。
  */
 public class WordCount {
 
