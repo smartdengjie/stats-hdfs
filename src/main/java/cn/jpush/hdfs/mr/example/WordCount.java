@@ -33,15 +33,33 @@ public class WordCount {
 	private final static IntWritable one = new IntWritable(1);
 	private Text word = new Text();
 
+	/*
+	 * 源文件：a b b
+	 * 
+	 * map之后：
+	 * 
+	 * a 1
+	 * 
+	 * b 1
+	 * 
+	 * b 1
+	 */
 	public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 	    StringTokenizer itr = new StringTokenizer(value.toString());
 	    while (itr.hasMoreTokens()) {
 		word.set(itr.nextToken());
-		context.write(word, one);
+		context.write(word, one);// 每次统计出来的单词+1
 	    }
 	}
     }
 
+    /*
+     * reduce之后:
+     * 
+     * a 1
+     * 
+     * b 2
+     */
     public static class IntSumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 	private IntWritable result = new IntWritable();
 

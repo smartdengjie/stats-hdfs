@@ -53,7 +53,7 @@ public class Sort {
     }
 
     public static void main(String[] args) throws Exception {
-	long random = new Random().nextLong();
+	long random = new Random().nextLong();// 生产随机数
 	log.info("random -> " + random);
 	args = new String[] { String.format(ConfigUtils.HDFS.WORDCOUNT_IN, "sort.txt"), String.format(ConfigUtils.HDFS.WORDCOUNT_OUT, random) };
 
