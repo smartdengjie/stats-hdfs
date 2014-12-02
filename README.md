@@ -19,6 +19,7 @@ https://github.com/dengjie420/maven-repository/blob/master/image/hadoop/example/
 
 # 3.项目依赖
 stats-hdfs项目采用maven项目结构，需要依赖项目仓库，为了共享仓库，我将仓库建在github上方便其他项目使用。
+
 `仓库地址如下：`
 
 https://github.com/dengjie420/maven-repository
