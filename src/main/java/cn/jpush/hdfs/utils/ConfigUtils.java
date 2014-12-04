@@ -17,4 +17,14 @@ public class ConfigUtils {
 	String WORDCOUNT_OUT = "hdfs://10.211.55.12:9000/home/hdfs/output/wordcount/%s";
     }
 
+    public interface HIVE {
+	String CREATE_LOCAL_TBL = "hive.table.create.local";
+	String CREATE_HDFS_TBL = "hive.table.create.hdfs";
+	String DROP_TBL = "hive.table.drop";
+	String LOAD_LOCAL = "hive.table.load.local";
+	String LOAD_HDFS = "hive.table.load.hdfs";
+	String QUERY = "hive.table.query";
+	String HDFS_FILE_PATH = "hdfs://10.211.55.12:9000/home/hive/warehouse/%s";
+    }
+
 }

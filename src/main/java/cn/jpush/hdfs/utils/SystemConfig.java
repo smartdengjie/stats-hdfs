@@ -22,7 +22,8 @@ public class SystemConfig {
 	prop = new Properties();
 	try {
 	    try {
-		prop.load(SystemConfig.class.getClassLoader().getResourceAsStream("hdfs.properties"));
+		prop.load(SystemConfig.class.getClassLoader().getResourceAsStream("system-config.properties"));
+		prop.load(SystemConfig.class.getClassLoader().getResourceAsStream("jdbc.properties"));
 	    } catch (Exception exp) {
 		exp.printStackTrace();
 	    }

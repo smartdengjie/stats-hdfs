@@ -9,6 +9,20 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>maven-repository</id>
+			<name>maven-repository</name>
+			<url>https://github.com/dengjie420/maven-repository.git</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>avro</groupId>
@@ -85,7 +99,7 @@
 			<artifactId>protobuf-java</artifactId>
 			<version>2.5.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons</groupId>
 			<artifactId>commons-configuration</artifactId>
@@ -135,12 +149,75 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-		
+
 		<dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.5</version>
-        </dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.5-pre7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.26</version>
+		</dependency>
+
+		<dependency>
+			<groupId>hive</groupId>
+			<artifactId>hive-jdbc</artifactId>
+			<version>0.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>hive</groupId>
+			<artifactId>hive-metastore</artifactId>
+			<version>0.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>hive</groupId>
+			<artifactId>jdo-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>hive</groupId>
+			<artifactId>hive-service</artifactId>
+			<version>0.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>hive</groupId>
+			<artifactId>hive-exec</artifactId>
+			<version>0.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>hive</groupId>
+			<artifactId>antlr-runtime</artifactId>
+			<version>3.4</version>
+		</dependency>
+		<dependency>
+			<groupId>hive</groupId>
+			<artifactId>libfb303</artifactId>
+			<version>0.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>hive</groupId>
+			<artifactId>libthrift</artifactId>
+			<version>0.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>hive</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>hive</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.2.5</version>
+		</dependency>
 
 	</dependencies>
 	<build>

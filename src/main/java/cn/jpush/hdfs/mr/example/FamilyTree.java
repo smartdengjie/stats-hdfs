@@ -10,7 +10,6 @@ import java.util.StringTokenizer;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -20,8 +19,6 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.jpush.hdfs.mr.example.Sort.SortMapper;
-import cn.jpush.hdfs.mr.example.Sort.SortReducer;
 import cn.jpush.hdfs.utils.ConfigUtils;
 
 /**
