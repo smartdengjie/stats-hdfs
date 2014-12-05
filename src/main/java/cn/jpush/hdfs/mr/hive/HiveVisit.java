@@ -11,7 +11,7 @@ import java.sql.Statement;
 /**
  * @author dengjie
  * @date 2014年12月4日
- * @description JDBC访问hive
+ * @description 提供一个JDBC访问hive的原型，若用在实际业务中，可拓展该类。
  */
 public class HiveVisit {
 
@@ -49,10 +49,8 @@ public class HiveVisit {
 	    System.out.println(rs.getString(1) + "\t" + rs.getString(2));
 	}
 	// 加载hdfs的数据
-	// String filePath =
-	// "hdfs://10.211.55.12:9000/home/hive/warehouse/hive_peple/people";
-	// sql = "load data inpath '" + filePath + "' overwrite into table " +
-	// tableName;
+//	String filePath = "hdfs://10.211.55.12:9000/home/hive/warehouse/stu/people";
+//	sql = "load data inpath '" + filePath + "' overwrite into table " + tableName;
 
 	// 加载本地的数据
 	sql = "load data local inpath '/home/cloud001/hdfs/people' overwrite into table " + tableName;
