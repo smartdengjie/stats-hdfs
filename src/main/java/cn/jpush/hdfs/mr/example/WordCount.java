@@ -56,6 +56,14 @@ public class WordCount {
     }
 
     /*
+     * reduce之前：
+     * 
+     * a 1
+     * 
+     * b 1
+     * 
+     * b 1
+     * 
      * reduce之后:
      * 
      * a 1

@@ -218,6 +218,46 @@
 			<artifactId>httpcore</artifactId>
 			<version>4.2.5</version>
 		</dependency>
+		<dependency>
+			<groupId>hbase</groupId>
+			<artifactId>hbase-common</artifactId>
+			<version>0.98.8</version>
+		</dependency>
+		<dependency>
+			<groupId>hbase</groupId>
+			<artifactId>hbase-client</artifactId>
+			<version>0.98.8</version>
+		</dependency>
+		<dependency>
+			<groupId>hbase</groupId>
+			<artifactId>hbase-protocol</artifactId>
+			<version>0.98.8</version>
+		</dependency>
+		<dependency>
+			<groupId>hbase</groupId>
+			<artifactId>zookeeper</artifactId>
+			<version>3.4.6</version>
+		</dependency>
+		<dependency>
+			<groupId>hbase</groupId>
+			<artifactId>htrace-core</artifactId>
+			<version>2.04</version>
+		</dependency>
+		<dependency>
+			<groupId>hbase</groupId>
+			<artifactId>netty</artifactId>
+			<version>3.6.6</version>
+		</dependency>
+		<dependency>
+			<groupId>hbase</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>hbase</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
 
 	</dependencies>
 	<build>
