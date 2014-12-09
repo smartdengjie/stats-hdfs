@@ -3,9 +3,8 @@
  */
 package cn.jpush.hdfs.mr.hbase;
 
-import java.util.List;
+import org.junit.Test;
 
-import cn.jpush.hdfs.mr.domain.HBaseTableDomain;
 import cn.jpush.hdfs.utils.HBaseFactory;
 
 /**
@@ -16,10 +15,21 @@ import cn.jpush.hdfs.utils.HBaseFactory;
 public class HBaseExample {
 
     public static void main(String[] args) {
-
-	List<HBaseTableDomain> set = HBaseFactory.get("test");
-//	System.out.println(set.toString());
 	System.out.println(HBaseFactory.get("test","row1").toString());
+    }
+    
+    public void printAll(){
+	
+    }
+    
+    @Test
+    public void printTableList(){
+	System.out.println(HBaseFactory.list().toString());
+    }
+    
+    @Test
+    public void createTable(){
+	HBaseFactory.create("stu", new String[]{""});
     }
 
 }

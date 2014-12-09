@@ -30,7 +30,7 @@ import cn.jpush.hdfs.mr.domain.HBaseTableDomain;
 /**
  * @author dengjie
  * @date 2014年12月8日
- * @description TODO
+ * @description java操作hbase的API接口
  */
 public class HBaseFactory {
 
@@ -44,24 +44,30 @@ public class HBaseFactory {
     }
 
     public static void create(String tableName, String[] columnFamily) {
-	HBaseAdmin admin;
 	try {
-	    admin = new HBaseAdmin(conf);
-	    if (admin.tableExists(tableName)) {
-		admin.disableTable(tableName);
-		admin.deleteTable(tableName);
-		log.info(tableName + " is exist ,delete ......");
+	    HBaseAdmin admin = new HBaseAdmin(conf);
+	    try {
+		if (admin.tableExists(tableName)) {
+		    admin.disableTable(tableName);
+		    admin.deleteTable(tableName);
+		    log.info(tableName + " is exist ,delete ......");
+		}
+		HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf(tableName));
+		for (String col : columnFamily) {
+		    HColumnDescriptor hColDesc = new HColumnDescriptor(col);// 列族名
+		    tableDescriptor.addFamily(hColDesc);
+		}
+		admin.createTable(tableDescriptor);
+		log.info("create table[" + tableName + "] finished");
+	    } catch (Exception e) {
+		e.printStackTrace();
+		log.error("create table is error -> " + e.getMessage());
+	    } finally {
+		admin.close();
 	    }
-	    HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf(tableName));
-	    for (String col : columnFamily) {
-		HColumnDescriptor hColDesc = new HColumnDescriptor(col);// 列族名
-		tableDescriptor.addFamily(hColDesc);
-	    }
-	    admin.createTable(tableDescriptor);
-	    log.info("create table[" + tableName + "] finished");
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    log.error("create table is error -> " + e.getMessage());
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	    log.error("create table is error -> " + ex.getMessage());
 	}
     }
 
@@ -71,19 +77,25 @@ public class HBaseFactory {
      * @param tableName
      */
     public static void drop(String tableName) {
-	HBaseAdmin admin;
 	try {
-	    admin = new HBaseAdmin(conf);
-	    if (admin.tableExists(tableName)) {
-		admin.disableTable(tableName);
-		admin.deleteTable(tableName);
-		log.info(tableName + " delete success!");
-	    } else {
-		log.info(tableName + " table does not exist!");
+	    HBaseAdmin admin = new HBaseAdmin(conf);
+	    try {
+		if (admin.tableExists(tableName)) {
+		    admin.disableTable(tableName);
+		    admin.deleteTable(tableName);
+		    log.info(tableName + " delete success!");
+		} else {
+		    log.info(tableName + " table does not exist!");
+		}
+	    } catch (Exception e) {
+		e.printStackTrace();
+		log.error("delete table is error -> " + e.getMessage());
+	    } finally {
+		admin.close();
 	    }
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    log.error("delete table is error -> " + e.getMessage());
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	    log.error("delete table is error -> " + ex.getMessage());
 	}
     }
 
@@ -98,10 +110,9 @@ public class HBaseFactory {
      */
     public static void insert(String tableName, String rowKey, String columnFamily, String column, String value) {
 	try {
-	    HBaseAdmin admin;
+	    HBaseAdmin admin = new HBaseAdmin(conf);
 	    HTable table = new HTable(conf, tableName);
 	    try {
-		admin = new HBaseAdmin(conf);
 		if (admin.tableExists(tableName)) {
 		    Put put = new Put(Bytes.toBytes(rowKey));// 行键唯一
 		    // 参数分别为：列族，列，值
@@ -116,6 +127,7 @@ public class HBaseFactory {
 		log.error("insert into single data has error -> " + e.getMessage());
 	    } finally {
 		table.close();
+		admin.close();
 	    }
 	} catch (Exception ex) {
 	    ex.printStackTrace();
@@ -131,10 +143,9 @@ public class HBaseFactory {
      */
     public static void insert(String tableName, ArrayList<Put> alists) {
 	try {
-	    HBaseAdmin admin;
+	    HBaseAdmin admin = new HBaseAdmin(conf);
 	    HTable table = new HTable(conf, tableName);
 	    try {
-		admin = new HBaseAdmin(conf);
 		if (admin.tableExists(tableName)) {
 		    table.put(alists);
 		    log.info("add [" + tableName + "] success!");
@@ -146,6 +157,7 @@ public class HBaseFactory {
 		log.error("insert into ArrayList has error -> " + e.getMessage());
 	    } finally {
 		table.close();
+		admin.close();
 	    }
 	} catch (Exception ex) {
 	    ex.printStackTrace();
@@ -161,10 +173,9 @@ public class HBaseFactory {
      */
     public static void delete(String tableName, String rowKey) {
 	try {
-	    HBaseAdmin admin;
+	    HBaseAdmin admin = new HBaseAdmin(conf);
 	    HTable table = new HTable(conf, tableName);
 	    try {
-		admin = new HBaseAdmin(conf);
 		if (admin.tableExists(tableName)) {
 		    Delete delete = new Delete(Bytes.toBytes(rowKey));
 		    table.delete(delete);
@@ -177,6 +188,7 @@ public class HBaseFactory {
 		log.error("delete from rowKey has error -> " + e.getMessage());
 	    } finally {
 		table.close();
+		admin.close();
 	    }
 	} catch (Exception ex) {
 	    log.error("delete from rowKey has error -> " + ex.getMessage());
@@ -191,10 +203,9 @@ public class HBaseFactory {
      */
     public static void delete(String tableName, String[] rowKey) {
 	try {
-	    HBaseAdmin admin;
+	    HBaseAdmin admin = new HBaseAdmin(conf);
 	    HTable table = new HTable(conf, tableName);
 	    try {
-		admin = new HBaseAdmin(conf);
 		if (admin.tableExists(tableName)) {
 		    ArrayList<Delete> alist = new ArrayList<Delete>();
 		    for (String key : rowKey) {
@@ -211,6 +222,7 @@ public class HBaseFactory {
 		log.error("delete from rowKey String Array has error -> " + e.getMessage());
 	    } finally {
 		table.close();
+		admin.close();
 	    }
 	} catch (Exception ex) {
 	    ex.printStackTrace();
@@ -282,5 +294,33 @@ public class HBaseFactory {
 	    log.error("get all data is error -> " + ex.getMessage());
 	}
 	return hTableDomainSet;
+    }
+
+    /**
+     * list hbase table name
+     * 
+     * @return
+     */
+    public static List<String> list() {
+	List<String> list = new ArrayList<String>();
+	try {
+	    HBaseAdmin admin = new HBaseAdmin(conf);
+	    try {
+		TableName[] tableList = admin.listTableNames();
+		for (TableName tableName : tableList) {
+		    list.add(tableName.getNameAsString());
+		}
+	    } catch (Exception e) {
+		e.printStackTrace();
+		log.error("list hbase table name has error -> " + e.getMessage());
+	    } finally {
+		admin.close();
+	    }
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	    log.error("list hbase table name has error -> " + ex.getMessage());
+
+	}
+	return list;
     }
 }
