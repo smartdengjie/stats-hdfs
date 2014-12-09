@@ -231,18 +231,99 @@ public class HBaseFactory {
     }
 
     /**
-     * select tableName and return HBaseTableDomain Object
+     * select tableName according to rowKey and return HBaseTableDomain Array
      * 
      * @param tableName
      * @param rowKey
      * @return
      */
-    public static HBaseTableDomain get(String tableName, String rowKey) {
+    public static List<HBaseTableDomain> get(String tableName, String rowKey) {
+	List<HBaseTableDomain> hTableDomainSet = new ArrayList<HBaseTableDomain>();
+	try {
+	    HTable table = new HTable(conf, tableName);
+	    try {
+		Get get = new Get(Bytes.toBytes(rowKey));
+		Result result = table.get(get);
+
+		for (Cell cell : result.rawCells()) {
+		    HBaseTableDomain hTableDomain = new HBaseTableDomain();
+		    hTableDomain.setRowName(new String(CellUtil.cloneRow(cell)));
+		    hTableDomain.setColumnFamily(new String(CellUtil.cloneFamily(cell)));
+		    hTableDomain.setColumnFamilyName(new String(CellUtil.cloneQualifier(cell)));
+		    hTableDomain.setColumnFamilyValue(new String(CellUtil.cloneValue(cell)));
+		    hTableDomain.setTimestamp(cell.getTimestamp());
+		    hTableDomainSet.add(hTableDomain);
+		}
+	    } catch (Exception e) {
+		e.printStackTrace();
+		log.error("get rowKey[" + rowKey + "] data is error -> " + e.getMessage());
+	    } finally {
+		table.close();
+	    }
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	    log.error("get rowKey[" + rowKey + "] data is error -> " + ex.getMessage());
+	}
+	return hTableDomainSet;
+    }
+
+    /**
+     * select tableName according to rowKey and columnFamily, return
+     * HBaseTableDomain Array
+     * 
+     * @param tableName
+     * @param rowKey
+     * @param columnFamily
+     * @return
+     */
+    public static List<HBaseTableDomain> get(String tableName, String rowKey, String columnFamily) {
+	List<HBaseTableDomain> hTableDomainSet = new ArrayList<HBaseTableDomain>();
+	try {
+	    HTable table = new HTable(conf, tableName);
+	    try {
+		Get get = new Get(Bytes.toBytes(rowKey));
+		get.addFamily(columnFamily.getBytes());
+		Result result = table.get(get);
+
+		for (Cell cell : result.rawCells()) {
+		    HBaseTableDomain hTableDomain = new HBaseTableDomain();
+		    hTableDomain.setRowName(new String(CellUtil.cloneRow(cell)));
+		    hTableDomain.setColumnFamily(new String(CellUtil.cloneFamily(cell)));
+		    hTableDomain.setColumnFamilyName(new String(CellUtil.cloneQualifier(cell)));
+		    hTableDomain.setColumnFamilyValue(new String(CellUtil.cloneValue(cell)));
+		    hTableDomain.setTimestamp(cell.getTimestamp());
+		    hTableDomainSet.add(hTableDomain);
+		}
+	    } catch (Exception e) {
+		e.printStackTrace();
+		log.error("get rowKey[" + rowKey + "] data is error -> " + e.getMessage());
+	    } finally {
+		table.close();
+	    }
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	    log.error("get rowKey[" + rowKey + "] data is error -> " + ex.getMessage());
+	}
+	return hTableDomainSet;
+    }
+
+    /**
+     * select tableName according to rowKey,columnFamily,qulifier and return
+     * HBaseTableDomain Object
+     * 
+     * @param tableName
+     * @param rowKey
+     * @param columnFamily
+     * @param qualifier
+     * @return
+     */
+    public static HBaseTableDomain get(String tableName, String rowKey, String columnFamily, String qualifier) {
 	HBaseTableDomain hTableDomain = new HBaseTableDomain();
 	try {
 	    HTable table = new HTable(conf, tableName);
 	    try {
 		Get get = new Get(Bytes.toBytes(rowKey));
+		get.addColumn(columnFamily.getBytes(), qualifier.getBytes());
 		Result result = table.get(get);
 
 		for (Cell cell : result.rawCells()) {
