@@ -15,23 +15,28 @@ import cn.jpush.hdfs.utils.HBaseFactory;
 public class HBaseExample {
 
     @Test
-    public void printTableList(){
+    public void listTable(){
 	System.out.println(HBaseFactory.list().toString());
     }
     
     @Test
     public void createTable(){
-	HBaseFactory.create("people", new String[]{"info","member"});
+	HBaseFactory.create("ads", new String[]{"catalog"});
     }
     
     @Test
     public void insertTable(){
-	HBaseFactory.insert("people", "001", "info", "sex", "m");
+	HBaseFactory.insert("ads", "20141211", "catalog", "type", "food");
     }
     
     @Test
     public void getTable(){
-	System.out.println(HBaseFactory.get("people","001","info","name").toString());
+	System.out.println(HBaseFactory.get("people").toString());
     }
 
+    @Test
+    public void version(){
+	System.out.println(HBaseFactory.version());
+    }
+    
 }
