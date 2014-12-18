@@ -402,6 +402,47 @@ public class HBaseFactory {
     }
 
     /**
+     * select htable range time
+     * 
+     * @param tableName
+     * @param filterNumber
+     * @return
+     */
+    public static List<HBaseTableDomain> get(String tableName, long start, long end) {
+	List<HBaseTableDomain> hTableDomainSet = new ArrayList<HBaseTableDomain>();
+	try {
+	    HConnection connection = HConnectionManager.createConnection(conf);
+	    HTableInterface table = connection.getTable(tableName);
+	    try {
+		Scan scan = new Scan();
+		scan.setTimeRange(start, end);
+		ResultScanner results = table.getScanner(scan);
+		for (Result result : results) {
+		    for (Cell cell : result.rawCells()) {
+			HBaseTableDomain hTableDomain = new HBaseTableDomain();
+			hTableDomain.setRowName(new String(CellUtil.cloneRow(cell)));
+			hTableDomain.setColumnFamily(new String(CellUtil.cloneFamily(cell)));
+			hTableDomain.setColumnFamilyName(new String(CellUtil.cloneQualifier(cell)));
+			hTableDomain.setColumnFamilyValue(new String(CellUtil.cloneValue(cell)));
+			hTableDomain.setTimestamp(cell.getTimestamp());
+			hTableDomainSet.add(hTableDomain);
+		    }
+		}
+	    } catch (Exception e) {
+		e.printStackTrace();
+		log.error("get all data is error -> " + e.getMessage());
+	    } finally {
+		table.close();
+		connection.close();
+	    }
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	    log.error("get all data is error -> " + ex.getMessage());
+	}
+	return hTableDomainSet;
+    }
+
+    /**
      * list hbase table name
      * 
      * @return
