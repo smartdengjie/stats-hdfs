@@ -3,7 +3,9 @@ package cn.jpush.hdfs.utils;
 public class ConfigUtils {
 
     public interface HOSTNAME {
-	final String IP = "10.211.55.11";// ubuntu server ip
+	final String MASTER = "master";
+	final String IP = "10.211.55.17";
+	final int PORT = 9000;
     }
 
     public interface MEMORY {
@@ -11,10 +13,12 @@ public class ConfigUtils {
     }
 
     public interface HDFS {
-	String INPUT_PATH = "hdfs://10.211.55.12:9000/home/hdfs/ncdc/2011/999999-96404-2011.gz";
-	String OUTPUT_PATH = "hdfs://10.211.55.12:9000/home/hdfs/output/ncdc/2011/%s";
-	String WORDCOUNT_IN = "hdfs://10.211.55.12:9000/home/hdfs/test/%s";
-	String WORDCOUNT_OUT = "hdfs://10.211.55.12:9000/home/hdfs/output/wordcount/%s";
+	String INPUT_PATH = "hdfs://" + HOSTNAME.MASTER + ":" + HOSTNAME.PORT + "/home/hdfs/ncdc/2011/999999-96404-2011.gz";
+	String OUTPUT_PATH = "hdfs://" + HOSTNAME.MASTER + ":" + HOSTNAME.PORT + "/home/hdfs/output/ncdc/2011/%s";
+	String WORDCOUNT_IN = "hdfs://" + HOSTNAME.MASTER + ":" + HOSTNAME.PORT + "/home/hdfs/test/%s";
+	String WORDCOUNT_OUT = "hdfs://" + HOSTNAME.MASTER + ":" + HOSTNAME.PORT + "/home/hdfs/output/result/%s";
+	String LOGDFS_PATH = "hdfs://" + HOSTNAME.MASTER + ":" + HOSTNAME.PORT + "/home/hdfs/resource/access_2013_05_30.log";
+	String LOGDFS_RESULT = "hdfs://" + HOSTNAME.MASTER + ":" + HOSTNAME.PORT + "/home/hdfs/logdfs/%s";
     }
 
     public interface HIVE {
@@ -24,7 +28,7 @@ public class ConfigUtils {
 	String LOAD_LOCAL = "hive.table.load.local";
 	String LOAD_HDFS = "hive.table.load.hdfs";
 	String QUERY = "hive.table.query";
-	String HDFS_FILE_PATH = "hdfs://10.211.55.12:9000/home/hive/warehouse/%s";
+	String HDFS_FILE_PATH = "hdfs://" + HOSTNAME.MASTER + ":" + HOSTNAME.PORT + "/home/hive/warehouse/%s";
     }
 
 }

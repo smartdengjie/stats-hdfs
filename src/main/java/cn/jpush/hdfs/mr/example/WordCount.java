@@ -49,7 +49,7 @@ public class WordCount {
 	public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 	    StringTokenizer itr = new StringTokenizer(value.toString());
 	    while (itr.hasMoreTokens()) {
-		word.set(itr.nextToken());
+		word.set(itr.nextToken());// 按空格分割单词
 		context.write(word, one);// 每次统计出来的单词+1
 	    }
 	}
@@ -95,8 +95,8 @@ public class WordCount {
 	job.setReducerClass(IntSumReducer.class);
 	job.setOutputKeyClass(Text.class);
 	job.setOutputValueClass(IntWritable.class);
-	FileInputFormat.addInputPath(job, new Path(String.format(ConfigUtils.HDFS.WORDCOUNT_IN, "test.txt")));
-	FileInputFormat.addInputPath(job, new Path(String.format(ConfigUtils.HDFS.WORDCOUNT_IN, "word.txt")));
+//	FileInputFormat.addInputPath(job, new Path(String.format(ConfigUtils.HDFS.WORDCOUNT_IN, "test.txt")));
+	FileInputFormat.addInputPath(job, new Path(String.format(ConfigUtils.HDFS.WORDCOUNT_IN, "word")));
 	FileOutputFormat.setOutputPath(job, new Path(String.format(ConfigUtils.HDFS.WORDCOUNT_OUT, random)));
 	System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
