@@ -17,10 +17,18 @@ public class LogParserFactory {
     public static final SimpleDateFormat dateformat = new SimpleDateFormat("yyyyMMddHHmmss");
 
     public static void main(String[] args) {
-	final String S1 = "27.19.74.143 - - [30/May/2013:17:38:20 +0800] \"GET /static/image/common/faq.gif HTTP/1.1\" 200 1127";
+	// final String S1 =
+	// "27.19.74.143 - - [30/May/2013:17:38:20 +0800] \"GET /static/image/common/faq.gif HTTP/1.1\" 200 1127";
+	final String S1 = "192.168.250.155 - - [02/Sep/2014:14:05:07 +0800] \"GET /push/apps/1b4b45564e16e4d0f3f01033/push/detail/ HTTP/1.0\" 200 26077";
 	final String[] array = LogParserFactory.parse(S1);
 	System.out.println("样例数据： " + S1);
 	System.out.format("解析结果：  ip=%s, time=%s, url=%s, status=%s, traffic=%s", array[0], array[1], array[2], array[3], array[4]);
+	if (array[2].endsWith(" HTTP/1.1")) {
+	    array[2] = array[2].substring(0, array[2].length() - " HTTP/1.1".length());
+	} else if (array[2].endsWith(" HTTP/1.0")) {
+	    array[2] = array[2].substring(0, array[2].length() - " HTTP/1.0".length());
+	}
+	System.out.println("\nurl=%s" + array[2]);
     }
 
     /**

@@ -19,6 +19,8 @@ public class ConfigUtils {
 	String WORDCOUNT_OUT = "hdfs://" + HOSTNAME.MASTER + ":" + HOSTNAME.PORT + "/home/hdfs/output/result/%s";
 	String LOGDFS_PATH = "hdfs://" + HOSTNAME.MASTER + ":" + HOSTNAME.PORT + "/home/hdfs/resource/access_2013_05_30.log";
 	String LOGDFS_RESULT = "hdfs://" + HOSTNAME.MASTER + ":" + HOSTNAME.PORT + "/home/hdfs/logdfs/%s";
+	String PORTAL_PATH = "hdfs://" + HOSTNAME.MASTER + ":" + HOSTNAME.PORT + "/home/hdfs/resource/logs/localhost_access_log.%s.txt";
+	String PORTAL_RESULT = "hdfs://" + HOSTNAME.MASTER + ":" + HOSTNAME.PORT + "/home/hdfs/logdfs/portal/%s";
     }
 
     public interface HIVE {

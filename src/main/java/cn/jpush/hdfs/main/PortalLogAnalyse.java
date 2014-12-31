@@ -3,9 +3,6 @@
  */
 package cn.jpush.hdfs.main;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
@@ -18,25 +15,25 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-import cn.jpush.hdfs.mapreducer.LogMapper;
-import cn.jpush.hdfs.mapreducer.LogReducer;
+import cn.jpush.hdfs.mapreducer.PortalLogMapper;
+import cn.jpush.hdfs.mapreducer.PortalLogReducer;
 import cn.jpush.hdfs.utils.ConfigUtils;
 
 /**
  * @author dengjie
- * @date 2014年12月24日
- * @description 将清洗后的日志重新存放指定的hdfs上
+ * @date 2014年12月29日
+ * @description TODO
  */
-public class LogCleanMR extends Configured implements Tool {
+public class PortalLogAnalyse extends Configured implements Tool {
 
     @SuppressWarnings("deprecation")
     public int run(String[] args) throws Exception {
 	final Job job = new Job(new Configuration(), LogCleanMR.class.getSimpleName());
-	job.setJarByClass(LogCleanMR.class);
-	job.setMapperClass(LogMapper.class);
+	job.setJarByClass(PortalLogMapper.class);
+	job.setMapperClass(PortalLogMapper.class);
 	job.setMapOutputKeyClass(LongWritable.class);
 	job.setMapOutputValueClass(Text.class);
-	job.setReducerClass(LogReducer.class);
+	job.setReducerClass(PortalLogReducer.class);
 	job.setOutputKeyClass(Text.class);
 	job.setOutputValueClass(NullWritable.class);
 	FileInputFormat.setInputPaths(job, args[0]);
@@ -46,9 +43,13 @@ public class LogCleanMR extends Configured implements Tool {
     }
 
     public static void main(String[] args) throws Exception {
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
-	args = new String[] { ConfigUtils.HDFS.LOGDFS_PATH, String.format(ConfigUtils.HDFS.LOGDFS_RESULT, sdf.format(new Date())) };
-	int res = ToolRunner.run(new Configuration(), new LogCleanMR(), args);
+	int res = 0;
+	for (int i = 0; i < 1; i++) {
+	    String in = "2014-12-2" + i;
+	    String out = "2014_12_2" + i;
+	    args = new String[] { String.format(ConfigUtils.HDFS.PORTAL_PATH, in), String.format(ConfigUtils.HDFS.PORTAL_RESULT, out) };
+	    res = ToolRunner.run(new Configuration(), new PortalLogAnalyse(), args);
+	}
 	System.exit(res);
     }
 
