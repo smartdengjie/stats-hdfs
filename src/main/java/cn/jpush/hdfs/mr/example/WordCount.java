@@ -85,19 +85,40 @@ public class WordCount {
 
     @SuppressWarnings("deprecation")
     public static void main(String[] args) throws Exception {
-	Configuration conf = new Configuration();
-	long random = new Random().nextLong();
-	log.info("random -> " + random);
-	Job job = new Job(conf, "word count");
-	job.setJarByClass(WordCount.class);
-	job.setMapperClass(TokenizerMapper.class);
-	job.setCombinerClass(IntSumReducer.class);
-	job.setReducerClass(IntSumReducer.class);
-	job.setOutputKeyClass(Text.class);
-	job.setOutputValueClass(IntWritable.class);
-//	FileInputFormat.addInputPath(job, new Path(String.format(ConfigUtils.HDFS.WORDCOUNT_IN, "test.txt")));
-	FileInputFormat.addInputPath(job, new Path(String.format(ConfigUtils.HDFS.WORDCOUNT_IN, "word")));
-	FileOutputFormat.setOutputPath(job, new Path(String.format(ConfigUtils.HDFS.WORDCOUNT_OUT, random)));
-	System.exit(job.waitForCompletion(true) ? 0 : 1);
+	Configuration conf1 = new Configuration();
+	Configuration conf2 = new Configuration();
+	long random1 = new Random().nextLong();
+	long random2 = new Random().nextLong();
+	log.info("random1 -> " + random1 + ",random2 -> " + random2);
+	Job job1 = new Job(conf1, "word count1");
+	job1.setJarByClass(WordCount.class);
+	job1.setMapperClass(TokenizerMapper.class);
+	job1.setCombinerClass(IntSumReducer.class);
+	job1.setReducerClass(IntSumReducer.class);
+	job1.setOutputKeyClass(Text.class);
+	job1.setOutputValueClass(IntWritable.class);
+
+	Job job2 = new Job(conf2, "word count2");
+	job2.setJarByClass(WordCount.class);
+	job2.setMapperClass(TokenizerMapper.class);
+	job2.setCombinerClass(IntSumReducer.class);
+	job2.setReducerClass(IntSumReducer.class);
+	job2.setOutputKeyClass(Text.class);
+	job2.setOutputValueClass(IntWritable.class);
+	// FileInputFormat.addInputPath(job, new
+	// Path(String.format(ConfigUtils.HDFS.WORDCOUNT_IN, "test.txt")));
+	FileInputFormat.addInputPath(job1, new Path(String.format(ConfigUtils.HDFS.WORDCOUNT_IN, "word")));
+	FileOutputFormat.setOutputPath(job1, new Path(String.format(ConfigUtils.HDFS.WORDCOUNT_OUT, random1)));
+	FileInputFormat.addInputPath(job2, new Path(String.format(ConfigUtils.HDFS.WORDCOUNT_IN, "word")));
+	FileOutputFormat.setOutputPath(job2, new Path(String.format(ConfigUtils.HDFS.WORDCOUNT_OUT, random2)));
+
+	boolean flag1 = job1.waitForCompletion(true);
+	boolean flag2 = job1.waitForCompletion(true);
+	if (flag1 && flag2) {
+	    System.exit(0);
+	} else {
+	    System.exit(1);
+	}
+
     }
 }
