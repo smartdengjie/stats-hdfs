@@ -20,7 +20,8 @@ public class TimestampTest {
 	SimpleDateFormat tmp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	System.out.println(tmp.parse(start.format(new Date())).getTime());
 	System.out.println(tmp.parse(end.format(new Date())).getTime());
-	System.out.println(end.format(new Date(1417652765993L)));
+	System.out.println(tmp.format(start.parse("2015-01-09 00:00:00").getTime()));
+	System.out.println(tmp.format(new Date(1420732800000L)));
     }
     
 }
